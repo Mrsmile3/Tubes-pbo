@@ -5,43 +5,54 @@
  */
 
 package Isi;
-import java.sql.SQLException;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.sql.ResultSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
-
 /**
  *
  * @author X455L
  */
-
-public class AdminPanel extends javax.swing.JFrame {
- Connection con;
- Statement stat;
- ResultSet rs;
- String sql;
+public class Orderadmin extends javax.swing.JFrame {
+    Connection con;
+    Statement stat;
+    ResultSet rs;
+    String sql;
     /**
-     * Creates new form AdminPanel
+     * Creates new form OrderAdmin
      */
-    public AdminPanel(String name) {
+    public Orderadmin() {
         initComponents();
-        setTitle("ADMIN PANEL");
         koneksi DB = new koneksi();
         DB.config();
         con = DB.con;
-        stat = DB.stm; 
+        stat = DB.stm;
         jTable1();
     }
-
+private void jTable1(){
+        DefaultTableModel t = new DefaultTableModel();
+        t.addColumn("ID ORDER");
+        t.addColumn("NAMA GAME");
+        t.addColumn("TANGGAL ORDER");
+        t.addColumn("ID KUSTOMER");
+        t.addColumn("STATUS");
+        jTable1.setModel(t);
+        try {
+            sql = "SELECT * FROM order_game";
+            rs = stat.executeQuery(sql);
+            while(rs.next()){
+                t.addRow(new Object[]{rs.getString("id_order"),
+                                      rs.getString("nama_game"),
+                                      rs.getString("tgl_order"),
+                                      rs.getString("id_kustomer"),
+                                      rs.getString("status")
+                });
+            }
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,49 +62,23 @@ public class AdminPanel extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        Id = new javax.swing.JTextField();
-        nama = new javax.swing.JTextField();
-        genre1 = new javax.swing.JTextField();
-        genre2 = new javax.swing.JTextField();
-        genre3 = new javax.swing.JTextField();
-        Update = new javax.swing.JButton();
-        input = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        stok = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("PANEL ADMIN");
-
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID GAME", "NAMA GAME", "GENRE 1", "GENRE 2", "GENRE 3", "STOK"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -103,62 +88,22 @@ public class AdminPanel extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel2.setText("ID Game");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setText("Menu Order Admin");
 
-        jLabel3.setText("Nama game");
-
-        jLabel4.setText("Genre 1");
-
-        jLabel5.setText("Genre 2");
-
-        jLabel6.setText("Genre 3");
-
-        jLabel7.setText("Stok");
-
-        Update.setText("Ubah");
-        Update.setEnabled(false);
-        Update.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UpdateActionPerformed(evt);
-            }
-        });
-
-        input.setText("Masuk");
-        input.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputActionPerformed(evt);
-            }
-        });
-
-        jButton3.setText("Ke Panel Order");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setText("Log out");
-        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton4MouseClicked(evt);
-            }
-        });
-
-        jButton1.setText("Clear");
+        jButton1.setText("Log Out");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Refresh");
+        jButton2.setText("Kembali Ke Panel Admin");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-
-        jButton5.setText("Hapus");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -167,104 +112,42 @@ public class AdminPanel extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Update, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 130, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(628, 628, 628))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(Id, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(214, 214, 214))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(nama, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-                                .addComponent(genre1, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-                                .addComponent(genre2, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-                                .addComponent(genre3, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-                                .addComponent(stok))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jScrollPane1)
-                            .addContainerGap())
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(input, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
-                .addGap(424, 424, 424)
-                .addComponent(jButton4)
-                .addGap(78, 78, 78)
-                .addComponent(jButton3)
-                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(214, 214, 214))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addGap(103, 103, 103)
+                                .addComponent(jButton1)
+                                .addGap(167, 167, 167))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(Id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(genre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(genre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(genre3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(stok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Update)
-                            .addComponent(input))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton4)
-                            .addComponent(jButton3))
-                        .addGap(68, 68, 68))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton5)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(74, 74, 74))
         );
 
         pack();
     }// </editor-fold>                        
+String name = "";
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    JOptionPane.showMessageDialog(null, "Log Out Sukses");
+    System.exit(0);        // TODO add your handling code here:
+    }                                        
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {                                     
      int i = jTable1.getSelectedRow();
@@ -272,124 +155,27 @@ public class AdminPanel extends javax.swing.JFrame {
          return;
      }
      String var1 = (String)jTable1.getValueAt(i,0);
-     String var2 = (String)jTable1.getValueAt(i,1);
-     String var3 = (String)jTable1.getValueAt(i,2);
-     String var4 = (String)jTable1.getValueAt(i,3);
-     String var5 = (String)jTable1.getValueAt(i,4);
-     String var6 = (String)jTable1.getValueAt(i,5);
-     Id.setText(var1);
-     nama.setText(var2);
-     genre1.setText(var3);
-     genre2.setText(var4);
-     genre3.setText(var5);
-     stok.setText(var6);
-     Update.setEnabled(true);
-     input.setEnabled(false);
+     int opsi = JOptionPane.showConfirmDialog(null, "Benarkah anda ingin mengkonfirmasi order ini ?", "Konfirmasi Order", JOptionPane.YES_NO_OPTION);
+        if(opsi == JOptionPane.YES_OPTION){
+     try{
+     sql = "UPDATE order_game set status = 'Lunas' where id_order = '"+ var1 + "'";
+     stat.executeUpdate(sql);
+     jTable1();
+     }catch(Exception e){
+         JOptionPane.showMessageDialog(null, "Sudah Terupdate !");
+     }}else{
+            jTable1();
+        }
     }                                    
 
-    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {                                      
-    JOptionPane.showMessageDialog(null, "Log Out Sukses");
-    System.exit(0);
-    }                                     
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-    Id.setText("");
-     nama.setText("");
-     genre1.setText("");
-     genre2.setText("");
-     genre3.setText("");
-     stok.setText("");
-     Update.setEnabled(false);
-     input.setEnabled(true);
-    }                                        
-
-    private void inputActionPerformed(java.awt.event.ActionEvent evt) {                                      
-     try {
-         stat.executeUpdate("INSERT INTO game values("
-         + "'" + Id.getText()     + "',"
-         + "'" + nama.getText()   + "',"
-         + "'" + genre1.getText() + "',"
-         + "'" + genre2.getText() + "',"
-         + "'" + genre3.getText() + "',"
-         + "'" + stok.getText()   + "')"
-         );
-         Id.setText("");
-        nama.setText("");
-        genre1.setText("");
-        genre2.setText("");
-        genre3.setText("");
-        stok.setText("");
-    }catch(Exception e){
-        JOptionPane.showMessageDialog(null, "Maaf Data tidak terinput,Harap Isi data dengan benar dan lengkap!!!");
-    }
-    }                                     
-        
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        jTable1();
-        JOptionPane.showMessageDialog(null,"Table Terefresh !");
+     this.setVisible(false);
+     new AdminPanel(name).setVisible(true);// TODO add your handling code here:
     }                                        
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-    this.setVisible(false);
-    new Orderadmin().setVisible(true);// TODO add your handling code here:
-    }                                        
-
-    private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {                                       
-      int sc =JOptionPane.showConfirmDialog(null,"Apakah anda yakin ingin mengupdate data ?","Update Data",JOptionPane.YES_NO_OPTION);
-      try{
-          sql = "UPDATE game set id_game =?,nama=?,Genre1=?,Genre2=?,Genre3=?,stok=? where id_game = '"+Id.getText()+ "'";
-          PreparedStatement ok=con.prepareStatement(sql);
-      if(sc==0){
-          try{
-              ok.setString(1,Id.getText());
-              ok.setString(2,nama.getText());
-              ok.setString(3,genre1.getText());
-              ok.setString(4,genre2.getText());
-              ok.setString(5,genre3.getText());
-              ok.setString(6,stok.getText());
-              ok.executeUpdate();
-              JOptionPane.showMessageDialog(null,"Update Data Berhasil !!!");
-              
-          }catch(Exception e){
-              JOptionPane.showMessageDialog(null,"Update Data GAGAL !!!!!");
-              
-          }
-      }
-      }catch(Exception e){
-          
-      }
-      jTable1();
-    }                                      
-    
     /**
      * @param args the command line arguments
      */
-    private void jTable1(){
-        DefaultTableModel t = new DefaultTableModel();
-        t.addColumn("ID GAME");
-        t.addColumn("NAMA GAME");
-        t.addColumn("GENRE 1");
-        t.addColumn("GENRE 2");
-        t.addColumn("GENRE 3");
-        t.addColumn("STOK");
-        jTable1.setModel(t);
-        try {
-            sql = "SELECT * FROM game";
-            rs = stat.executeQuery(sql);
-            while(rs.next()){
-                t.addRow(new Object[]{rs.getString("id_game"),
-                                      rs.getString("nama"),
-                                      rs.getString("Genre1"),
-                                      rs.getString("Genre2"),
-                                      rs.getString("Genre3"),
-                                      rs.getString("Stok")
-                });
-            }
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(rootPane, e);
-        }
-    }
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -404,47 +190,29 @@ public class AdminPanel extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Orderadmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Orderadmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Orderadmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminPanel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Orderadmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                String a="";
-                new AdminPanel(a).setVisible(true);
+                new Orderadmin().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify                     
-    private javax.swing.JTextField Id;
-    private javax.swing.JButton Update;
-    private javax.swing.JTextField genre1;
-    private javax.swing.JTextField genre2;
-    private javax.swing.JTextField genre3;
-    private javax.swing.JButton input;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField nama;
-    private javax.swing.JTextField stok;
     // End of variables declaration                   
 }
